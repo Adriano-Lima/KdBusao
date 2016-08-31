@@ -1,4 +1,6 @@
-package hello;
+package br.com.kdbusao.controller;
+import br.com.kdbusao.model.Bus;
+import br.com.kdbusao.service.BusServicePontosdeParada;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

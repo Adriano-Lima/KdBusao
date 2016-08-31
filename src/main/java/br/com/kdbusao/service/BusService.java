@@ -1,5 +1,6 @@
-package hello;
+package br.com.kdbusao.service;
 
+import br.com.kdbusao.model.Bus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
