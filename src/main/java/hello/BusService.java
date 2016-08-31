@@ -1,6 +1,5 @@
-package br.com.kdbusao.service;
+package hello;
 
-import br.com.kdbusao.model.Bus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,11 +14,11 @@ public class BusService {
 	
 	private static final List<Bus> data = new ArrayList<Bus>(Arrays.asList(new Bus(counter.incrementAndGet(), "T102", 120.0, 122.0),
 				new Bus(counter.incrementAndGet(), "T103", 180.0, 182.0)));
-        
 		
 		
 	public List<Bus> getAll(){
-		return data;		
+		return data;
+		
 	}
 
 

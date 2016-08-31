@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework</groupId>
-    <artifactId>KdBusao</artifactId>
+    <artifactId>gs-rest-service</artifactId>
     <version>0.1.0</version>
 
     <parent>
@@ -33,6 +33,8 @@
     <properties>
         <java.version>1.8</java.version>
     </properties>
+
+
     <build>
         <plugins>
             <plugin>
@@ -54,5 +56,4 @@
             <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>
     </pluginRepositories>
-    <name>KdBusao</name>
 </project>
