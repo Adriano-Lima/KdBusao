@@ -1,6 +1,8 @@
-package hello;
+package br.com.kdbusao.controller;
 
 
+import br.com.kdbusao.model.Bus;
+import br.com.kdbusao.service.BusService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
