@@ -1,6 +1,8 @@
 
-package hello;
+package br.com.kdbusao.controller;
 
+import br.com.kdbusao.model.Bus;
+import br.com.kdbusao.service.BusServicePontosdeParada;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package hello;
+package br.com.kdbusao.model;
 
 public class Bus {
 
