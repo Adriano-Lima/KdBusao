@@ -2,10 +2,10 @@ package br.com.kdbusao.model;
 
 public class Bus {
 
-    private final long id;
+    private final int id;
     private final String linha;
     private final double lat, longi;
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 	public String getLinha() {
@@ -17,7 +17,7 @@ public class Bus {
 	public double getLongi() {
 		return longi;
 	}
-	public Bus(long id, String linha, double lat, double longi) {
+	public Bus(int id, String linha, double lat, double longi) {
 		super();
 		this.id = id;
 		this.linha = linha;
