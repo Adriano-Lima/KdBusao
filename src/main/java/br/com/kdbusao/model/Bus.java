@@ -24,5 +24,13 @@ public class Bus {
 		this.lat = lat;
 		this.longi = longi;
 	}
+        
+        public Bus(String id, String lat, String longi) {
+		super();
+		this.id = Integer.parseInt(id);
+		this.lat = Double.parseDouble(lat);
+		this.longi = Double.parseDouble(longi);
+                this.linha="";
+	}        
 
 }

@@ -26,5 +26,12 @@ public class BusController {
 //	public void T(@RequestParam(value = "name", defaultValue = "World") String name) {
 //		System.out.println("Recebi em T:>>>"+name);
 //	}
+    
+            @RequestMapping(path = "/posicao", method = RequestMethod.POST)
+    public String setPosicao(@RequestParam("idOnibus") String idOnibus, @RequestParam("longitude") String longitude,
+            @RequestParam("latitude") String latitude, @RequestParam("data") String data ) {
+       return busService.setLocalizacao(idOnibus, longitude, latitude, data);
+        
+    }
 
 }
