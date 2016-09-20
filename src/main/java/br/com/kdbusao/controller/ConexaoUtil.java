@@ -19,11 +19,12 @@ public class ConexaoUtil {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             c = DriverManager.getConnection("jdbc:mysql://localhost:3306/Kdbusao", "root", "854525/*");
+            //c = DriverManager.getConnection("jdbc:mysql://mysql106675-kdbusao.jelasticlw.com.br/Kdbusao", "root", "APLazo21711");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             return c;
         }
-    } 
+    }
 
 }
