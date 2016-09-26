@@ -42,4 +42,9 @@ public class BusService {
         return resposta;
     }
 
+    public List<String> Linhas(String cidade) {
+        BusDao dao = new BusDao();
+        return dao.getLinhasCidade(cidade);
+    }
+
 }

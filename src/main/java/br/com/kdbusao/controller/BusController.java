@@ -17,21 +17,24 @@ public class BusController {
     @Autowired
     private BusService busService;
 
-    @RequestMapping(path = "/{linha}", method = RequestMethod.GET)
+    //retornar todos os onibus de uma linha
+    @RequestMapping(path = "/onibus/{linha}", method = RequestMethod.GET)
     public List<Bus> getAll(@PathVariable("linha") String linha) {
-       return busService.getLoc(linha);
-        
+       return busService.getLoc(linha);        
     }
-//        @RequestMapping(path="/buspost", method=RequestMethod.POST)
-//	public void T(@RequestParam(value = "name", defaultValue = "World") String name) {
-//		System.out.println("Recebi em T:>>>"+name);
-//	}
     
-            @RequestMapping(path = "/posicao", method = RequestMethod.POST)
+    //atualizar a posicao de um onibus 
+    @RequestMapping(path = "/onibus/posicao", method = RequestMethod.POST)
     public String setPosicao(@RequestParam("idOnibus") String idOnibus, @RequestParam("longitude") String longitude,
             @RequestParam("latitude") String latitude, @RequestParam("data") String data ) {
-       return busService.setLocalizacao(idOnibus, longitude, latitude, data);
-        
+        return busService.setLocalizacao(idOnibus, longitude, latitude, data);   
     }
+    
+    //consulta de linhas disponiveis por cidade
+    @RequestMapping(path = "/linhas/{cidade}", method = RequestMethod.GET)
+    public List<String> getLinhas(@PathVariable("cidade") String cidade) {
+       return busService.Linhas(cidade);        
+    }
+    
 
 }

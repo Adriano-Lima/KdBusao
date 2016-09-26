@@ -1,6 +1,7 @@
 package br.com.kdbusao.controller;
 
 import br.com.kdbusao.model.Bus;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,13 +27,12 @@ public class BusDao {
             }
             statement.close();
             connection.close();
-            //2016-09-15 17:14:19
             SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             Date dateserver = ft.parse(dataServer);
-            System.out.println("Data que veio na requisicao"+data + "data do servidor:"+dateserver);
+            System.out.println("Data que veio na requisicao"+data + "data do servidor:"+dateserver);////// para fins de log 
             flag = data.after(dateserver);
         } catch (Exception e) {
-            System.out.println("e.getMessage()");
+            System.out.println(e.getMessage());
         } finally {
             return flag;
         }
@@ -52,7 +52,7 @@ public class BusDao {
             statement.close();
             connection.close();
         } catch (Exception e) {
-            System.out.println("e.getMessage()");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -78,6 +78,29 @@ public class BusDao {
             System.err.println("e.getMessage()");
         } finally {
             return onibus;
+        }
+    }
+
+    public List<String> getLinhasCidade(String cidade) {
+       List<String> linhas = new ArrayList<String>();
+        try {
+            Connection connection = ConexaoUtil.getInstance().getConnection();
+            String sql = "select nome from linha where cidade like ?";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, cidade);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String linha  = new String(resultSet.getString("nome"));
+                linhas.add(linha);                
+            }
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            System.err.println("e.getMessage()");
+        } finally {
+            return linhas;
         }
     }
 
