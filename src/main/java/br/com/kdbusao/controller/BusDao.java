@@ -1,6 +1,7 @@
 package br.com.kdbusao.controller;
 
 import br.com.kdbusao.model.Bus;
+import br.com.kdbusao.model.PontoParada;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class BusDao {
             connection.close();
             SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             Date dateserver = ft.parse(dataServer);
-            System.out.println("Data que veio na requisicao"+data + "data do servidor:"+dateserver);////// para fins de log 
+            System.out.println("Data que veio na requisicao" + data + "data do servidor:" + dateserver);////// para fins de log 
             flag = data.after(dateserver);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -41,12 +42,16 @@ public class BusDao {
     public void atualizarLocalizacao(Bus bus) {
         try {
             Connection connection = ConexaoUtil.getInstance().getConnection();
-            String sql = "update onibus set latitude = ?, longitude = ?, dataHora = CURRENT_TIMESTAMP where idonibus = ?";
+            String sql = "update onibus set latitude = ?, longitude = ?, dataHora = ? where idonibus = ?";
+
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String DateToStr = ft.format(new Date());           
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setDouble(1, bus.getLat());
             statement.setDouble(2, bus.getLongi());
-            statement.setInt(3, bus.getId());
+            statement.setString(3,DateToStr);
+            statement.setInt(4, bus.getId());
 
             statement.execute();
             statement.close();
@@ -82,7 +87,7 @@ public class BusDao {
     }
 
     public List<String> getLinhasCidade(String cidade) {
-       List<String> linhas = new ArrayList<String>();
+        List<String> linhas = new ArrayList<String>();
         try {
             Connection connection = ConexaoUtil.getInstance().getConnection();
             String sql = "select nome from linha where cidade like ?";
@@ -92,8 +97,8 @@ public class BusDao {
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                String linha  = new String(resultSet.getString("nome"));
-                linhas.add(linha);                
+                String linha = new String(resultSet.getString("nome"));
+                linhas.add(linha);
             }
             statement.close();
             connection.close();
@@ -101,6 +106,32 @@ public class BusDao {
             System.err.println("e.getMessage()");
         } finally {
             return linhas;
+        }
+    }
+
+    public List<PontoParada> getPontosLinha(String linha) {
+        List<PontoParada> pontos = new ArrayList<PontoParada>();
+        try {
+            Connection connection = ConexaoUtil.getInstance().getConnection();
+            String sql = "select latitude,longitude,descricao from pontoParada inner join linha on(pontoParada.idlinha = linha.idlinha) where linha.nome like ?";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, linha);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String latitude = resultSet.getString("latitude");
+                String longitude = resultSet.getString("longitude");
+                String descricao = resultSet.getString("descricao");
+                String coordenadas = latitude.concat(",").concat(longitude);
+                pontos.add(new PontoParada(coordenadas, "", descricao));
+            }
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            System.err.println("e.getMessage()");
+        } finally {
+            return pontos;
         }
     }
 
