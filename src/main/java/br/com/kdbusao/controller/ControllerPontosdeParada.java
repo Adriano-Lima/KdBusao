@@ -2,7 +2,7 @@ package br.com.kdbusao.controller;
 
 import br.com.kdbusao.model.Bus;
 import br.com.kdbusao.model.PontoParada;
-import br.com.kdbusao.service.BusServicePontosdeParada;
+import br.com.kdbusao.service.ServicePontosdeParada;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ControllerPontosdeParada {
 
     @Autowired
-    private BusServicePontosdeParada busServicePontosdeParada;
+    private ServicePontosdeParada busServicePontosdeParada;
 
     @RequestMapping(path = "/pontosParada/{linha}", method = RequestMethod.GET)
     public List<PontoParada> getAll(@PathVariable("linha") String linha) {

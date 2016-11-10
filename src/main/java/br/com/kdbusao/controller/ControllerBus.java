@@ -3,7 +3,7 @@ package br.com.kdbusao.controller;
 import br.com.kdbusao.model.Atualizacao;
 import br.com.kdbusao.model.Bus;
 import br.com.kdbusao.model.Resposta;
-import br.com.kdbusao.service.BusService;
+import br.com.kdbusao.service.ServiceBus;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/bus")
-public class BusController {
+public class ControllerBus {
 
     @Autowired
-    private BusService busService;
+    private ServiceBus busService;
 
     //retornar todos os onibus de uma linha
     @RequestMapping(path = "/onibus/{linha}", method = RequestMethod.GET)

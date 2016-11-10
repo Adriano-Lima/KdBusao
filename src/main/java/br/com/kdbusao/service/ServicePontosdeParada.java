@@ -5,7 +5,7 @@
  */
 package br.com.kdbusao.service;
 
-import br.com.kdbusao.controller.BusDao;
+import br.com.kdbusao.controller.Dao;
 import br.com.kdbusao.model.PontoParada;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,10 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BusServicePontosdeParada {
+public class ServicePontosdeParada {
 
     public List<PontoParada> getPontos(String linha) {
-        BusDao dao = new BusDao();
+        Dao dao = new Dao();
         return dao.getPontosLinha(linha);
     }
 }

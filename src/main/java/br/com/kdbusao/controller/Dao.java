@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class BusDao {
+public class Dao {
 
     public boolean testarData(Bus bus, Date data) {
         boolean flag = false;
