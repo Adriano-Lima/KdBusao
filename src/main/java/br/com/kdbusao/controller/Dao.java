@@ -1,8 +1,12 @@
 package br.com.kdbusao.controller;
 
 import br.com.kdbusao.model.Bus;
+import br.com.kdbusao.model.Empresa;
+import br.com.kdbusao.model.Informacao;
 import br.com.kdbusao.model.PontoParada;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
+import java.io.ByteArrayOutputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.xml.bind.DatatypeConverter;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 public class Dao {
 
@@ -45,12 +51,12 @@ public class Dao {
             String sql = "update onibus set latitude = ?, longitude = ?, dataHora = ? where idonibus = ?";
 
             SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            String DateToStr = ft.format(new Date());           
+            String DateToStr = ft.format(new Date());
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setDouble(1, bus.getLat());
             statement.setDouble(2, bus.getLongi());
-            statement.setString(3,DateToStr);
+            statement.setString(3, DateToStr);
             statement.setInt(4, bus.getId());
 
             statement.execute();
@@ -132,6 +138,62 @@ public class Dao {
             System.err.println("e.getMessage()");
         } finally {
             return pontos;
+        }
+    }
+
+    public List<Empresa> getEmpresas(String cidade) {
+        List<Empresa> lista = new ArrayList<Empresa>();
+        try {
+            Connection connection = ConexaoUtil.getInstance().getConnection();
+            String sql = "select * from empresa where cidade like ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, cidade);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Empresa e = new Empresa(resultSet.getInt("id"), resultSet.getString("nome"), resultSet.getString("tipo"), resultSet.getString("descricao"),
+                        resultSet.getString("cidade"), resultSet.getString("endereco"), resultSet.getDouble("latitude"), resultSet.getDouble("longitude"));     
+
+                byte[] vec = resultSet.getBytes("icon");
+                String icon = Base64.encodeBase64String(vec);
+                e.setIcon(icon);
+                
+                vec = resultSet.getBytes("imagem");
+                String imagem = Base64.encodeBase64String(vec);
+                e.setImagem(imagem);
+                
+                lista.add(e);
+            }
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            System.err.println("e.getMessage()");
+        } finally {
+            return lista;
+        }
+    }
+
+    public List<Informacao> getInformacoes(String cidade) {
+         List<Informacao> lista = new ArrayList<Informacao>();
+        try {
+            Connection connection = ConexaoUtil.getInstance().getConnection();
+            String sql = "select * from informacoes where cidade like ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, cidade);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Informacao i  = new Informacao(resultSet.getInt("id"), resultSet.getString("cidade"), resultSet.getString("empresa"), resultSet.getString("link"));                
+                lista.add(i);
+            }
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            System.err.println("e.getMessage()");
+        } finally {
+            return lista;
         }
     }
 
