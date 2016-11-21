@@ -28,11 +28,8 @@ public class ControllerBus {
 
     //atualizar a posicao de um onibus 
     @RequestMapping(path = "/onibus/posicao", method = RequestMethod.POST)
-//    public Resposta setPosicao(@RequestParam("idOnibus") String idOnibus, @RequestParam("coordenadas") String coordenadas,
-//            @RequestParam("data") String data ) {
     public Resposta setPosicao(@RequestBody Atualizacao atualizacao) {
-        System.out.println("Mudança de localização >>:" + atualizacao.getLocalizacao() + " distancia >>:" + atualizacao.getDistancia()
-        + " velocidade >>:"+atualizacao.getVelocidade() +" data >>:"+atualizacao.getData());
+        System.out.println(" --------- sentido >>:"+atualizacao.getSentido()+" ---------");
         return busService.setLocalizacao(atualizacao);   
     }
 

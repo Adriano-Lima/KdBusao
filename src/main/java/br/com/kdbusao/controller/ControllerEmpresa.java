@@ -21,10 +21,4 @@ public class ControllerEmpresa {
         return service.getEmpresas(cidade);
     }
 
-    @RequestMapping(path = "empresas/icon/{id}", method = RequestMethod.GET)
-    public String getIcon(@PathVariable("id") int id) {
-        String icon = new String(service.getIcon(id));
-        return icon;
-    }
-
 }

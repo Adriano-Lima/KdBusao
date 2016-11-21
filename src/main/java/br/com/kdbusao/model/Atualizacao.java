@@ -5,15 +5,16 @@ import java.io.Serializable;
 
 public class Atualizacao implements Serializable {
     private int contador;
-    private String idOnibus, localizacao, data, distancia, velocidade;
+    private String idOnibus, localizacao, data, distancia, velocidade, sentido;
 
-    public Atualizacao(String id, int contador, String localizacao, String data, String distancia, String velocidade) {
+    public Atualizacao(String id, int contador, String localizacao, String data, String distancia, String velocidade, String sentido) {
         this.idOnibus = id;
         this.contador = contador;
         this.localizacao = localizacao;
         this.data = data;
         this.distancia = distancia;
         this.velocidade = velocidade;
+        this.sentido = sentido;
     }
 
     public Atualizacao(String id, int contador, String localizacao, String data) {
@@ -50,6 +51,14 @@ public class Atualizacao implements Serializable {
         this.data = data;
     }
 
+    public String getId() {
+        return idOnibus;
+    }
+
+    public void setId(String id) {
+        this.idOnibus = id;
+    }
+
     public String getDistancia() {
         return distancia;
     }
@@ -72,5 +81,13 @@ public class Atualizacao implements Serializable {
 
     public void setVelocidade(String velocidade) {
         this.velocidade = velocidade;
+    }
+
+    public String getSentido() {
+        return sentido;
+    }
+
+    public void setSentido(String sentido) {
+        this.sentido = sentido;
     }
 }

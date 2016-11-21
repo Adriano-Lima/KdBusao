@@ -45,19 +45,20 @@ public class Dao {
         }
     }
 
-    public void atualizarLocalizacao(Bus bus) {
+    public void atualizarLocalizacao(Bus bus, String sentido) {
         try {
             Connection connection = ConexaoUtil.getInstance().getConnection();
-            String sql = "update onibus set latitude = ?, longitude = ?, dataHora = ? where idonibus = ?";
+            String sql = "update onibus set latitude = ?, longitude = ?, dataHora = ?, sentido = ? where idonibus = ?";
 
-            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String DateToStr = ft.format(new Date());
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setDouble(1, bus.getLat());
             statement.setDouble(2, bus.getLongi());
             statement.setString(3, DateToStr);
-            statement.setInt(4, bus.getId());
+            statement.setString(4, sentido);
+            statement.setInt(5, bus.getId());            
 
             statement.execute();
             statement.close();
@@ -71,7 +72,7 @@ public class Dao {
         List<Bus> onibus = new ArrayList<Bus>();
         try {
             Connection connection = ConexaoUtil.getInstance().getConnection();
-            String sql = "select idonibus,latitude,longitude from onibus inner join linha on(onibus.idlinha = linha.idlinha) where linha.nome like ?";
+            String sql = "select idonibus,latitude,longitude,sentido from onibus inner join linha on(onibus.idlinha = linha.idlinha) where linha.nome like ?";
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, linha);
@@ -80,7 +81,7 @@ public class Dao {
             while (resultSet.next()) {
                 double latitude = Double.parseDouble(resultSet.getString("latitude"));
                 double longitude = Double.parseDouble(resultSet.getString("longitude"));
-                Bus b = new Bus(resultSet.getInt("idonibus"), linha, latitude, longitude);
+                Bus b = new Bus(resultSet.getInt("idonibus"), linha, latitude, longitude, resultSet.getString("sentido"));
                 onibus.add(b);
             }
             statement.close();

@@ -40,7 +40,7 @@ public class ServiceBus {
         Resposta resposta = new Resposta();
         if (teste) {
             resposta.setMsg("OK");
-            dao.atualizarLocalizacao(bus);
+            dao.atualizarLocalizacao(bus, atualizacao.getSentido());
         } else {
             resposta.setMsg("NO");
         }
